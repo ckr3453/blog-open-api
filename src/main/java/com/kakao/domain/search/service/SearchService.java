@@ -1,7 +1,6 @@
 package com.kakao.domain.search.service;
 
 import com.kakao.domain.search.dto.BlogResponse;
-import com.kakao.domain.search.dto.KeywordResponse;
 
 /**
  * packageName : com.kakao.domain.search.service.impl

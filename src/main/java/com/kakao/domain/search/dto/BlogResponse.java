@@ -1,38 +1,32 @@
 package com.kakao.domain.search.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 /**
  * packageName : com.kakao.domain.search.dto
- * fileName    : KakaoBlogApiResponse
+ * fileName    : BlogResponse
  * author      : ckr
- * date        : 2023/03/19
+ * date        : 2023/03/20
  * description :
  */
 @Getter
+@Builder
 public class BlogResponse {
-
-    private Meta meta;
-
-    private Documents[] documents;
-
-    @Getter
-    @Setter
-    private static class Meta {
-        boolean is_end;
-        int pageable_count;
-        int total_count;
-    }
+    private Integer page;
+    private Integer size;
+    private Long total;
+    private List<Blog> blogs;
 
     @Getter
-    @Setter
-    private static class Documents {
-        String blogname;
-        String contents;
-        String datetime;
-        String thumbnail;
-        String title;
-        String url;
+    @Builder
+    public static class Blog {
+        private String title;
+        private String url;
+        private String contents;
+        private String blogName;
+        private String thumbnail;
+        private String postDate;
     }
 }

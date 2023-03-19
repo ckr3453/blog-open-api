@@ -1,0 +1,53 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    context-path: /
+#  tomcat:
+#    max-threads: 200
+#    max-swallow-size: -1 # request body size
+
+spring:
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: create # create, create-drop, update, validate, none
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/blog
+    username: sa
+    password: sa
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  file:
+    path: "./logs"
+    name: "search"
+  level:
+    org:
+      hibernate:
+        type: trace
+
+kakao:
+  api-key: d43265be885dc95ed7194eff86dd5209
+  blog-search-uri: https://dapi.kakao.com/v2/search/blog
+
+naver:
+  client-id: 4zdYQWhbYkRYwyq3Z2Gn
+  client-secret: HQdv49L_Pk
+  blog-search-uri: https://openapi.naver.com/v1/search/blog.json
+

@@ -1,6 +1,6 @@
 package com.kakao.domain.search.resttemplates;
 
-import com.kakao.domain.search.dto.BlogResponse;
+import com.kakao.domain.search.dto.KakaoBlogApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -22,19 +22,22 @@ public class KakaoBlogApi {
     private final RestTemplate restTemplate;
 
     @Value("${kakao.blog-search-uri}")
-    private final String URI;
+    private String URI;
 
-    @Value("${kakao.api-key}") // 암호화?
-    private final String API_KEY;
+    @Value("${kakao.api-key}")
+    private String API_KEY;
 
-    public ResponseEntity<BlogResponse> get(final String query, final String sort, final Integer page, final Integer size){
-        // TODO: response 형태 통일해야함.
+    public ResponseEntity<KakaoBlogApiResponse> get(final String query, final String sort, final Integer page, final Integer size){
         return restTemplate.exchange(
-            createURI(query, sort, page, size),
+            createURI(query, convertSortStr(sort), page, size),
             HttpMethod.GET,
             new HttpEntity<>(createHeaders()),
-            BlogResponse.class
+            KakaoBlogApiResponse.class
         );
+    }
+
+    private String convertSortStr(String sort){
+        return !"accuracy".equals(sort) ? "recency" : "accuracy";
     }
 
     private String createURI(final String query, final String sort, final Integer page, final Integer size) {

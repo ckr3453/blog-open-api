@@ -1,6 +1,7 @@
 package com.kakao.domain.search.resttemplates;
 
-import com.kakao.domain.search.dto.BlogResponse;
+import com.kakao.domain.search.dto.KakaoBlogApiResponse;
+import com.kakao.domain.search.dto.NaverBlogApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -21,26 +22,25 @@ public class NaverBlogApi {
     private final RestTemplate restTemplate;
 
     @Value("${naver.blog-search-uri}")
-    private final String URI;
+    private String URI;
 
     @Value("${naver.client-id}") // 암호화?
-    private final String CLIENT_ID;
+    private String CLIENT_ID;
 
     @Value("${naver.client-secret}") // 암호화?
-    private final String CLIENT_SECRET;
+    private String CLIENT_SECRET;
 
-    public ResponseEntity<BlogResponse> get(final String query, final Integer display, final Integer start, final String sort){
-        // TODO: response 형태 통일해야함.
+    public ResponseEntity<NaverBlogApiResponse> get(final String query, final Integer display, final Integer start, final String sort){
         return restTemplate.exchange(
             createURI(query, display, start, convertSortStr(sort)),
             HttpMethod.GET,
             new HttpEntity<>(createHeaders()),
-            BlogResponse.class
+            NaverBlogApiResponse.class
         );
     }
 
-    private String convertSortStr(String kakaoSort){
-        return "recency".equals(kakaoSort) ? "date" : "sim";
+    private String convertSortStr(String sort){
+        return "recency".equals(sort) ? "date" : "sim";
     }
 
     private String createURI(final String query, final Integer display, final Integer start, final String sort) {

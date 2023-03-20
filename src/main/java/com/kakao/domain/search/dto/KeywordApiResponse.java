@@ -1,21 +1,20 @@
 package com.kakao.domain.search.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+
+import java.util.List;
 
 /**
  * packageName : com.kakao.domain.search.dto
- * fileName    : KeywordResponse
+ * fileName    : KeywordApiResponse
  * author      : ckr
  * date        : 2023/03/19
  * description :
  */
 @Getter
-@Setter
-@AllArgsConstructor
-public class KeywordResponse {
-    private String keyword;
-    private Long hits;
+@Builder
+public class KeywordApiResponse {
+
+    private List<KeywordProperty> keywords;
 }

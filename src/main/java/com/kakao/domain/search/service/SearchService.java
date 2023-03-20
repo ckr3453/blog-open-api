@@ -1,6 +1,8 @@
 package com.kakao.domain.search.service;
 
-import com.kakao.domain.search.dto.BlogResponse;
+import com.kakao.domain.search.dto.BlogApiRequest;
+import com.kakao.domain.search.dto.BlogApiResponse;
+import com.kakao.domain.search.dto.KeywordApiResponse;
 
 /**
  * packageName : com.kakao.domain.search.service.impl
@@ -10,6 +12,7 @@ import com.kakao.domain.search.dto.BlogResponse;
  * description :
  */
 public interface SearchService {
-    BlogResponse getBlogFromApi(String query, String sort, Integer page, Integer size);
+    BlogApiResponse getBlogFromApi(BlogApiRequest blogApiRequest);
     void saveKeyword(String keyword);
+    KeywordApiResponse getKeyword();
 }

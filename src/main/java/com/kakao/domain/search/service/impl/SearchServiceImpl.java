@@ -1,8 +1,6 @@
 package com.kakao.domain.search.service.impl;
 
-import com.kakao.domain.search.dto.BlogResponse;
-import com.kakao.domain.search.dto.KakaoBlogApiResponse;
-import com.kakao.domain.search.dto.NaverBlogApiResponse;
+import com.kakao.domain.search.dto.*;
 import com.kakao.domain.search.entity.Keyword;
 import com.kakao.domain.search.repository.KeywordRepository;
 import com.kakao.domain.search.resttemplates.KakaoBlogApi;
@@ -30,23 +28,23 @@ public class SearchServiceImpl implements SearchService {
     private final NaverBlogApi naverBlogApi;
 
     @Override
-    public BlogResponse getBlogFromApi(String query, String sort, Integer page, Integer size) {
-        ResponseEntity<KakaoBlogApiResponse> kakaoResponse = kakaoBlogApi.get(query, sort, page, size);
+    public BlogApiResponse getBlogFromApi(BlogApiRequest blogApiRequest) {
+        ResponseEntity<KakaoBlogApiResponse> kakaoResponse = kakaoBlogApi.get(blogApiRequest);
         if(kakaoResponse.getStatusCode() == HttpStatus.OK){
-            return getBlogResponse(kakaoResponse.getBody(), page, size);
+            return getBlogResponse(kakaoResponse.getBody(), blogApiRequest.getPage(), blogApiRequest.getSize());
         } else {
-            ResponseEntity<NaverBlogApiResponse> naverResponse = naverBlogApi.get(query, size, page, sort);
+            ResponseEntity<NaverBlogApiResponse> naverResponse = naverBlogApi.get(blogApiRequest);
             if(naverResponse.getStatusCode() != HttpStatus.OK) System.out.println("error caused"); // exception 처리
             return getBlogResponse(naverResponse.getBody());
         }
     }
 
-    private BlogResponse getBlogResponse(KakaoBlogApiResponse kakaoBlogApiResponse, Integer page, Integer size){
-        return BlogResponse.builder()
+    private BlogApiResponse getBlogResponse(KakaoBlogApiResponse kakaoBlogApiResponse, Integer page, Integer size){
+        return BlogApiResponse.builder()
             .page(page)
             .size(size)
             .total(kakaoBlogApiResponse.getMeta().getTotal_count())
-            .blogs(kakaoBlogApiResponse.getDocuments().stream().map(document -> BlogResponse.Blog.builder()
+            .blogs(kakaoBlogApiResponse.getDocuments().stream().map(document -> BlogApiResponse.Blog.builder()
                 .title(document.getTitle())
                 .url(document.getUrl())
                 .contents(document.getContents())
@@ -58,12 +56,12 @@ public class SearchServiceImpl implements SearchService {
             .build();
     }
 
-    private BlogResponse getBlogResponse(NaverBlogApiResponse naverBlogApiResponse){
-        return BlogResponse.builder()
+    private BlogApiResponse getBlogResponse(NaverBlogApiResponse naverBlogApiResponse){
+        return BlogApiResponse.builder()
             .page(naverBlogApiResponse.getStart())
             .size(naverBlogApiResponse.getDisplay())
             .total(naverBlogApiResponse.getTotal())
-            .blogs(naverBlogApiResponse.getItems().stream().map(item -> BlogResponse.Blog.builder()
+            .blogs(naverBlogApiResponse.getItems().stream().map(item -> BlogApiResponse.Blog.builder()
                 .title(item.getTitle())
                 .url(item.getLink())
                 .contents(item.getDescription())
@@ -89,5 +87,12 @@ public class SearchServiceImpl implements SearchService {
             keyword.increaseHits();
             keywordRepository.saveAndFlush(keyword);
         }
+    }
+
+    @Override
+    public KeywordApiResponse getKeyword() {
+        return KeywordApiResponse.builder()
+            .keywords(keywordRepository.findTop10ByOrderByHitsDesc())
+            .build();
     }
 }

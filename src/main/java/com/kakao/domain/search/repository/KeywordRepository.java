@@ -1,6 +1,6 @@
 package com.kakao.domain.search.repository;
 
-import com.kakao.domain.search.dto.KeywordResponse;
+import com.kakao.domain.search.dto.KeywordProperty;
 import com.kakao.domain.search.entity.Keyword;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +17,7 @@ import java.util.Optional;
  */
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
     Optional<Keyword> findByKeyword(String keyword);
-    @Query("SELECT new com.kakao.domain.search.dto.KeywordResponse(k.keyword, k.hits) FROM Keyword k order by k.hits desc")
-    List<KeywordResponse> findTop10ByOrderByHitsDesc();
+
+    @Query("SELECT new com.kakao.domain.search.dto.KeywordProperty(k.keyword, k.hits) FROM Keyword k order by k.hits desc")
+    List<KeywordProperty> findTop10ByOrderByHitsDesc();
 }

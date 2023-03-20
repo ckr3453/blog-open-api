@@ -1,6 +1,6 @@
 package com.kakao.domain.search.resttemplates;
 
-import com.kakao.domain.search.dto.KakaoBlogApiResponse;
+import com.kakao.domain.search.dto.BlogApiRequest;
 import com.kakao.domain.search.dto.NaverBlogApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,46 +18,49 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @Component
 @RequiredArgsConstructor
-public class NaverBlogApi {
+public class NaverBlogApi implements BlogApi {
     private final RestTemplate restTemplate;
 
     @Value("${naver.blog-search-uri}")
     private String URI;
 
-    @Value("${naver.client-id}") // 암호화?
+    @Value("${naver.client-id}")
     private String CLIENT_ID;
 
-    @Value("${naver.client-secret}") // 암호화?
+    @Value("${naver.client-secret}")
     private String CLIENT_SECRET;
 
-    public ResponseEntity<NaverBlogApiResponse> get(final String query, final Integer display, final Integer start, final String sort){
+    @Override
+    public ResponseEntity<NaverBlogApiResponse> get(BlogApiRequest blogApiRequest){
         return restTemplate.exchange(
-            createURI(query, display, start, convertSortStr(sort)),
+            createURI(blogApiRequest),
             HttpMethod.GET,
             new HttpEntity<>(createHeaders()),
             NaverBlogApiResponse.class
         );
     }
 
-    private String convertSortStr(String sort){
-        return "recency".equals(sort) ? "date" : "sim";
-    }
-
-    private String createURI(final String query, final Integer display, final Integer start, final String sort) {
+    @Override
+    public String createURI(BlogApiRequest blogApiRequest) {
         return UriComponentsBuilder.fromHttpUrl(URI)
-            .queryParam("query", query)
-            .queryParam("display", display)
-            .queryParam("start", start)
-            .queryParam("sort", sort)
+            .queryParam("query", blogApiRequest.getQuery())
+            .queryParam("display", blogApiRequest.getSize())
+            .queryParam("start", blogApiRequest.getPage())
+            .queryParam("sort", convertSortStr(blogApiRequest.getSort()))
             .encode()
             .toUriString();
     }
 
-    private HttpHeaders createHeaders() {
+    @Override
+    public HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("X-Naver-Client-Id", CLIENT_ID);
         headers.add("X-Naver-Client-Secret", CLIENT_SECRET);
         return headers;
+    }
+
+    private String convertSortStr(String sort){
+        return "recency".equals(sort) ? "date" : "sim";
     }
 }

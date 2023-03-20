@@ -1,5 +1,6 @@
 package com.kakao.domain.search.resttemplates;
 
+import com.kakao.domain.search.dto.BlogApiRequest;
 import com.kakao.domain.search.dto.KakaoBlogApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
-public class KakaoBlogApi {
+public class KakaoBlogApi implements BlogApi {
     private final RestTemplate restTemplate;
 
     @Value("${kakao.blog-search-uri}")
@@ -27,30 +28,29 @@ public class KakaoBlogApi {
     @Value("${kakao.api-key}")
     private String API_KEY;
 
-    public ResponseEntity<KakaoBlogApiResponse> get(final String query, final String sort, final Integer page, final Integer size){
+    @Override
+    public ResponseEntity<KakaoBlogApiResponse> get(BlogApiRequest blogApiRequest){
         return restTemplate.exchange(
-            createURI(query, convertSortStr(sort), page, size),
+            createURI(blogApiRequest),
             HttpMethod.GET,
             new HttpEntity<>(createHeaders()),
             KakaoBlogApiResponse.class
         );
     }
 
-    private String convertSortStr(String sort){
-        return !"accuracy".equals(sort) ? "recency" : "accuracy";
-    }
-
-    private String createURI(final String query, final String sort, final Integer page, final Integer size) {
+    @Override
+    public String createURI(BlogApiRequest blogApiRequest) {
         return UriComponentsBuilder.fromHttpUrl(URI)
-            .queryParam("query", query)
-            .queryParam("sort", sort)
-            .queryParam("page", page)
-            .queryParam("size", size)
+            .queryParam("query", blogApiRequest.getQuery())
+            .queryParam("sort", blogApiRequest.getSort())
+            .queryParam("page", blogApiRequest.getPage())
+            .queryParam("size", blogApiRequest.getSize())
             .encode()
             .toUriString();
     }
 
-    private HttpHeaders createHeaders() {
+    @Override
+    public HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization", "KakaoAK " + API_KEY);

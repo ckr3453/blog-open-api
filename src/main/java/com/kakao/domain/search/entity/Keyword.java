@@ -4,9 +4,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  * packageName : com.kakao.domain.search.entity
@@ -19,21 +19,18 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Keyword {
+public class Keyword extends Base {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private static final long serialVersionUID = -8324275265009835379L;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=100)
     private String keyword;
 
     @Column(nullable = false)
     private Long hits;
 
     @Builder
-    public Keyword(Long id, String keyword, Long hits) {
-        this.id = id;
+    public Keyword(String keyword, Long hits) {
         this.keyword = keyword;
         this.hits = hits;
     }

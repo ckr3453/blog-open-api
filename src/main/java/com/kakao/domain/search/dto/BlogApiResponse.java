@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Getter
 @Builder
-public class BlogResponse {
+public class BlogApiResponse {
     private Integer page;
     private Integer size;
     private Long total;

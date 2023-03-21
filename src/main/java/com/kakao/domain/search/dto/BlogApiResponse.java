@@ -16,6 +16,7 @@ import java.util.List;
 public class BlogApiResponse {
     private Integer page;
     private Integer size;
+    private String sort;
     private Long total;
     private List<Blog> blogs;
 

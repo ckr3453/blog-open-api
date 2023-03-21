@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         String message = "\n=*=*=*=     MethodArgumentNotValidException     =*=*=*=\n";
         log.error(message + e.getMessage(), e);
-        return new ResponseEntity<>(ErrorResponse.of(ErrorCode.ARGUMENT_NOT_VALID, e.getBindingResult().getFieldErrors().get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ErrorResponse.of(ErrorCode.INVALID_ARGUMENT, e.getBindingResult().getFieldErrors().get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)

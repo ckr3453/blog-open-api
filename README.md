@@ -59,7 +59,7 @@ GET /v1/search/blog HTTP/1.1
 - 요청예
 
 ```
-curl -v -X GET "http://localhost:8080/v1/search/blog?query=안녕하세요"
+curl -v -X GET "http://localhost:8080/v1/search/blog?query=hi"
 ```
 
 - 응답예
@@ -69,15 +69,15 @@ curl -v -X GET "http://localhost:8080/v1/search/blog?query=안녕하세요"
     "page": 1,
     "size": 10,
     "sort": "accuracy",
-    "total": 7186,
+    "total": 807216,
     "blogs": [
         {
-            "title": "[ethereum] transaction에 데이터를 포함하여 영원히 데이터 남기기",
-            "url": "http://meongae.tistory.com/62",
-            "contents": "앞의 결과는 &#39;안녕하세요&#39;를 입력한 후 이코딩을 한 결과입니다. 여기서 %를 지웁니다. · %지우기 전 %<b>EC</b>%<b>95%</b><b>88%</b><b>EB</b>%<b>85%</b><b>95%</b><b>ED</b>%<b>95%</b><b>98%</b><b>EC</b>%<b>84%</b><b>B</b><b>8%</b><b>EC</b>%<b>9A</b>%<b>94</b> · % 지운 후 <b>EC</b>9588<b>EB</b>8595<b>ED</b>9598<b>EC</b>84<b>B</b>8<b>EC</b>9A<b>94</b> %를 지운 결과를 복사한 후 앞의 고급: 데이터 추가를 눌었을 때 생긴 입력란에 넣어줍니다. · transaction 발생...",
-            "blogName": "멍개의 연구소",
-            "thumbnail": "https://search4.kakaocdn.net/argon/130x130_85_c/9iqlMyn5Vva",
-            "postDate": "2022-08-27T16:31:03.000+09:00"
+            "title": "케이뱅크 <b>Hi</b> teen 계좌, 카드 개설기",
+            "url": "http://dgb12.tistory.com/41",
+            "contents": "대해서 알아봤다. 원래 케이뱅크는 만 17세 이상 주민등록증 소유자만 계좌 개설이 가능했다. 그러나, 작년 12월 즈음 만 14세~만 18세를 대상으로 한 <b>Hi</b> teen 이라는 이름의 선불전자지급수단(가상계좌)을 런칭했다. 많은 청소년들이 사용하는 카카오뱅크 미니, 리브 Next, 토스유스 등과 같은 방식이다. 휴대폰 번호만...",
+            "blogName": "두곰의 글적글적",
+            "thumbnail": "https://search4.kakaocdn.net/argon/130x130_85_c/JHYY0jhvAA2",
+            "postDate": "2023-02-17T14:23:28.000+09:00"
         },...
     ]
 }
@@ -109,7 +109,7 @@ GET /v1/search/keyword HTTP/1.1
 - 요청예
 
 ```
-curl -v -X GET "http://localhost:8080/v1/keyword"
+curl -v -X GET "http://localhost:8080/v1/search/keyword"
 ```
 
 - 응답예

@@ -3,7 +3,6 @@ package com.kakao.domain.search.controller;
 import com.kakao.domain.search.dto.BlogApiRequest;
 import com.kakao.domain.search.dto.BlogApiResponse;
 import com.kakao.domain.search.dto.KeywordApiResponse;
-import com.kakao.domain.search.repository.KeywordRepository;
 import com.kakao.domain.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,6 @@ import javax.validation.Valid;
 public class SearchController {
 
     private final SearchService searchService;
-    private final KeywordRepository keywordRepository;
 
     @GetMapping("/blog")
     public ResponseEntity<BlogApiResponse> getBlog(@Valid BlogApiRequest blogApiRequest){

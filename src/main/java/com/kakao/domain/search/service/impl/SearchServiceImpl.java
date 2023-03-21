@@ -7,7 +7,8 @@ import com.kakao.domain.search.resttemplates.KakaoBlogApi;
 import com.kakao.domain.search.resttemplates.NaverBlogApi;
 import com.kakao.domain.search.service.SearchService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -31,18 +32,19 @@ public class SearchServiceImpl implements SearchService {
     public BlogApiResponse getBlogFromApi(BlogApiRequest blogApiRequest) {
         ResponseEntity<KakaoBlogApiResponse> kakaoResponse = kakaoBlogApi.get(blogApiRequest);
         if(kakaoResponse.getStatusCode() == HttpStatus.OK){
-            return getBlogResponse(kakaoResponse.getBody(), blogApiRequest.getPage(), blogApiRequest.getSize());
+            return getBlogResponse(kakaoResponse.getBody(), blogApiRequest);
         } else {
             ResponseEntity<NaverBlogApiResponse> naverResponse = naverBlogApi.get(blogApiRequest);
             if(naverResponse.getStatusCode() != HttpStatus.OK) System.out.println("error caused"); // exception 처리
-            return getBlogResponse(naverResponse.getBody());
+            return getBlogResponse(naverResponse.getBody(), blogApiRequest);
         }
     }
 
-    private BlogApiResponse getBlogResponse(KakaoBlogApiResponse kakaoBlogApiResponse, Integer page, Integer size){
+    private BlogApiResponse getBlogResponse(KakaoBlogApiResponse kakaoBlogApiResponse, BlogApiRequest blogApiRequest){
         return BlogApiResponse.builder()
-            .page(page)
-            .size(size)
+            .page(blogApiRequest.getPage())
+            .size(blogApiRequest.getSize())
+            .sort(blogApiRequest.getSort())
             .total(kakaoBlogApiResponse.getMeta().getTotal_count())
             .blogs(kakaoBlogApiResponse.getDocuments().stream().map(document -> BlogApiResponse.Blog.builder()
                 .title(document.getTitle())
@@ -56,10 +58,11 @@ public class SearchServiceImpl implements SearchService {
             .build();
     }
 
-    private BlogApiResponse getBlogResponse(NaverBlogApiResponse naverBlogApiResponse){
+    private BlogApiResponse getBlogResponse(NaverBlogApiResponse naverBlogApiResponse, BlogApiRequest blogApiRequest){
         return BlogApiResponse.builder()
-            .page(naverBlogApiResponse.getStart())
-            .size(naverBlogApiResponse.getDisplay())
+            .page(blogApiRequest.getPage())
+            .size(blogApiRequest.getSize())
+            .sort(blogApiRequest.getSort())
             .total(naverBlogApiResponse.getTotal())
             .blogs(naverBlogApiResponse.getItems().stream().map(item -> BlogApiResponse.Blog.builder()
                 .title(item.getTitle())
@@ -76,13 +79,11 @@ public class SearchServiceImpl implements SearchService {
     public synchronized void saveKeyword(final String query) {
         Optional<Keyword> optionalKeyword = keywordRepository.findByKeyword(query);
         if(optionalKeyword.isEmpty()){
-            // 키워드가 없는경우 키워드 row 추가
             keywordRepository.saveAndFlush(Keyword.builder()
                 .keyword(query)
                 .hits(1L)
                 .build());
         } else {
-            // 키워드가 있는경우 키워드 hit 추가
             Keyword keyword = optionalKeyword.get();
             keyword.increaseHits();
             keywordRepository.saveAndFlush(keyword);
@@ -92,7 +93,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public KeywordApiResponse getKeyword() {
         return KeywordApiResponse.builder()
-            .keywords(keywordRepository.findTop10ByOrderByHitsDesc())
+            .keywords(keywordRepository.findAllByOrderByHitsDesc().stream().limit(10).collect(Collectors.toList()))
             .build();
     }
 }

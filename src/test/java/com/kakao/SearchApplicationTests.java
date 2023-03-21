@@ -6,7 +6,6 @@ import com.kakao.exception.ErrorCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -19,8 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Sql("classpath:init-data.sql")
-class SearchApplicationTests extends BaseTest{
+class SearchApplicationTests extends BaseTest {
 
     private static final String GET_BLOG_URL = "/v1/search/blog";
     private static final String GET_KEYWORD_URL = "/v1/search/keyword";

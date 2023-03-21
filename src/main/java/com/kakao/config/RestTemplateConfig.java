@@ -22,12 +22,12 @@ class RestTemplateConfig {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 
         CloseableHttpClient httpClient = HttpClientBuilder.create()
-            .setMaxConnTotal(50)            //최대 커넥션 수
-            .setMaxConnPerRoute(20).build();//각 호스트(IP와 Port의 조합)당 커넥션 풀에 생성가능한 커넥션 수
+            .setMaxConnTotal(50)
+            .setMaxConnPerRoute(20).build();
 
         factory.setHttpClient(httpClient);
-        factory.setReadTimeout(5000); // read timeout
-        factory.setConnectTimeout(3000); // connection timeout
+        factory.setReadTimeout(5000);
+        factory.setConnectTimeout(3000);
 
         return new RestTemplate(factory);
     }

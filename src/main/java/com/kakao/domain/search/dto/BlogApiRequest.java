@@ -1,10 +1,10 @@
 package com.kakao.domain.search.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * packageName : com.kakao.domain.search.dto
@@ -14,7 +14,6 @@ import javax.validation.constraints.NotBlank;
  * description :
  */
 @Getter
-@Setter
 public class BlogApiRequest {
 
     public BlogApiRequest(String query, String sort, Integer page, Integer size) {
@@ -25,10 +24,11 @@ public class BlogApiRequest {
     }
 
     @NotBlank(message = "query must have a value")
+    @Size(min=1, max=100, message = "query length between 1 and 100")
     private String query;
     private String sort;
-    @DecimalMax(value = "50", message = "page is more than max")
+    @Max(value = 50, message = "page is more than max")
     private Integer page;
-    @DecimalMax(value = "50", message = "size is more than max")
+    @Max(value = 50, message = "size is more than max")
     private Integer size;
 }

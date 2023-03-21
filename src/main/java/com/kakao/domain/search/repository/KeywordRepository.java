@@ -19,5 +19,5 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long> {
     Optional<Keyword> findByKeyword(String keyword);
 
     @Query("SELECT new com.kakao.domain.search.dto.KeywordProperty(k.keyword, k.hits) FROM Keyword k order by k.hits desc")
-    List<KeywordProperty> findTop10ByOrderByHitsDesc();
+    List<KeywordProperty> findAllByOrderByHitsDesc();
 }

@@ -15,8 +15,8 @@
 
 둘중 하나 선택해서 다운로드 진행
 
-[search-0.0.1-SNAPSHOT.jar (깃허브)](https://github.com/ckr3453/blog-open-api/blob/master/search-0.0.1-SNAPSHOT.jar)<br/>
-[search-0.0.1-SNAPSHOT.jar (구글드라이브)](https://drive.google.com/file/d/1hkZCGb4BUey_hme_gKuMTLEvEvxjygox/view?usp=sharing)
+[search-0.0.1-SNAPSHOT.jar (깃허브)](https://github.com/ckr3453/blog-open-api/blob/master/jar/search-0.0.1-SNAPSHOT.jar)<br/>
+[search-0.0.1-SNAPSHOT.jar (구글드라이브)](https://drive.google.com/file/d/18RRfnvXDl77kP0Ql9at0M_-zoY4FVfH4/view?usp=sharing)
   
 ## API 명세
 

@@ -13,7 +13,10 @@
   
 ## jar 파일 다운로드 링크
 
-[search-0.0.1-SNAPSHOT.jar (다운로드시 다소 시간이 걸립니다. 잠시 기다려주세요)](https://drive.google.com/file/d/1hkZCGb4BUey_hme_gKuMTLEvEvxjygox/view?usp=sharing)
+둘중 하나 선택해서 다운로드 진행
+
+[search-0.0.1-SNAPSHOT.jar (깃허브)](https://github.com/ckr3453/blog-open-api/blob/master/search-0.0.1-SNAPSHOT.jar)
+[search-0.0.1-SNAPSHOT.jar (구글드라이브)](https://drive.google.com/file/d/1hkZCGb4BUey_hme_gKuMTLEvEvxjygox/view?usp=sharing)
   
 ## API 명세
 

@@ -51,7 +51,6 @@ GET /v1/search/blog HTTP/1.1
 |url|String|블로그 글 URL 입니다.|
 |contents|String|블로그 글 요약문 입니다.|
 |blogName|String|블로그의 이름입니다.|
-|thumbnail|String|블로그의 대표 미리보기 이미지 url 입니다. (카카오 api 검색의 경우만 제공합니다.)|
 |postDate|String|블로그 글 작성날짜입니다. (YYYYMMDD 형태로 제공합니다.)|
 
 #### Example
@@ -76,7 +75,6 @@ curl -v -X GET "http://localhost:8080/v1/search/blog?query=hi"
             "url": "http://dgb12.tistory.com/41",
             "contents": "대해서 알아봤다. 원래 케이뱅크는 만 17세 이상 주민등록증 소유자만 계좌 개설이 가능했다. 그러나, 작년 12월 즈음 만 14세~만 18세를 대상으로 한 <b>Hi</b> teen 이라는 이름의 선불전자지급수단(가상계좌)을 런칭했다. 많은 청소년들이 사용하는 카카오뱅크 미니, 리브 Next, 토스유스 등과 같은 방식이다. 휴대폰 번호만...",
             "blogName": "두곰의 글적글적",
-            "thumbnail": "https://search4.kakaocdn.net/argon/130x130_85_c/JHYY0jhvAA2",
             "postDate": "20230217"
         },...
     ]

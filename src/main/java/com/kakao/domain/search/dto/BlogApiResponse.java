@@ -27,7 +27,6 @@ public class BlogApiResponse {
         private String url;
         private String contents;
         private String blogName;
-        private String thumbnail;
         private String postDate;
     }
 }

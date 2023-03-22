@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * packageName : com.kakao.domain.search.repository
@@ -15,7 +16,7 @@ import java.util.Optional;
  * date        : 2023/03/19
  * description :
  */
-public interface KeywordRepository extends JpaRepository<Keyword, Long> {
+public interface KeywordRepository extends JpaRepository<Keyword, UUID> {
     Optional<Keyword> findByKeyword(String keyword);
 
     @Query("SELECT new com.kakao.domain.search.dto.KeywordProperty(k.keyword, k.hits) FROM Keyword k order by k.hits desc")

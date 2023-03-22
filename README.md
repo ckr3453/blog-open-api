@@ -51,8 +51,8 @@ GET /v1/search/blog HTTP/1.1
 |url|String|블로그 글 URL 입니다.|
 |contents|String|블로그 글 요약문 입니다.|
 |blogName|String|블로그의 이름입니다.|
-|thumbnail|String|블로그의 대표 미리보기 이미지 url 입니다.|
-|postDate|String|블로그 글 작성날짜입니다.|
+|thumbnail|String|블로그의 대표 미리보기 이미지 url 입니다. (카카오 api 검색의 경우만 제공합니다.)|
+|postDate|String|블로그 글 작성날짜입니다. (카카오 api 검색의 경우 [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].000+[tz]로 제공하고 네이버 api 검색의 경우 YYYYMMDD 형태로 제공합니다.)|
 
 #### Example
 

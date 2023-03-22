@@ -2,18 +2,18 @@
 
 ## 외부 라이브러리 사용
 
-- 'io.springfox:springfox-swagger2:2.9.2', 'io.springfox:springfox-swagger-ui:2.9.2'
-  - api 테스트를 위해 swagger docs 사용
+- `io.springfox:springfox-swagger2:2.9.2`, `io.springfox:springfox-swagger-ui:2.9.2`
+  - api 테스트를 위해 swagger ui 사용
 
-- 'org.apache.httpcomponents:httpclient'
+- `org.apache.httpcomponents:httpclient`
   - 외부 통신용 RestTemplate에 커넥션 풀 설정을 위해 사용
   
-- "com.fasterxml.uuid:java-uuid-generator:4.0.1"
+- `com.fasterxml.uuid:java-uuid-generator:4.0.1`
   - 대규모 트래픽에 대비하여 엔티티 생성시 id 값을 GeneratedValue가 아닌 uuid를 조합한 값을 사용 
   
 ## jar 파일 다운로드 링크
 
-[search-0.0.1-SNAPSHOT.jar 다운로드 (로딩 시간이 있습니다.)](https://drive.google.com/file/d/1WJqri4Ut2dW8A9KEwf40aN2HCwPH6Od9/view?usp=sharing)
+[search-0.0.1-SNAPSHOT.jar (다운로드시 다소 시간이 걸립니다. 잠시 기다려주세요)](https://drive.google.com/file/d/1WJqri4Ut2dW8A9KEwf40aN2HCwPH6Od9/view?usp=sharing)
   
 ## API 명세
 

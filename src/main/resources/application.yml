@@ -8,7 +8,7 @@ server:
 
 spring:
   profiles:
-    active: prd
+    active: dev
   jpa:
     hibernate:
       ddl-auto: create

@@ -173,28 +173,26 @@ class SearchApplicationTests extends BaseTest {
     }
 
     @Test
-    void 키워드저장_동시성_테스트() throws Exception {
+    void 키워드저장_동시에_1000개_저장() throws Exception {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(50);
-        CountDownLatch countDownLatch = new CountDownLatch(50);
+        int threadCount = 1000;
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < threadCount; i++) {
             executorService.execute(() -> {
-                searchService.saveKeyword("미세먼지");
                 searchService.saveKeyword("새로운키워드");
                 countDownLatch.countDown();
             });
         }
 
         countDownLatch.await();
-        Long hits1 = keywordRepository.findByKeyword("미세먼지").orElseThrow().getHits();
-        Long hits2 = keywordRepository.findByKeyword("새로운키워드").orElseThrow().getHits();
-        assertThat(hits1).isEqualTo(60L);
-        assertThat(hits2).isEqualTo(50L);
+        Long hits = keywordRepository.findByKeyword("새로운키워드").orElseThrow().getHits();
+        assertThat(hits).isEqualTo(1000L);
     }
 
     @Test
-    void 키워드검색api_hit기준_내림차순으로_최대10개_조회() throws Exception {
+    void 키워드검색api_최대10개_조회() throws Exception {
         mockMvc
             .perform(
                 get(GET_KEYWORD_URL)

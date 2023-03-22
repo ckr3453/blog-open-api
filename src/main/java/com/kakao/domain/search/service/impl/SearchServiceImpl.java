@@ -41,21 +41,26 @@ public class SearchServiceImpl implements SearchService {
     }
 
     private BlogApiResponse getBlogResponse(KakaoBlogApiResponse kakaoBlogApiResponse, BlogApiRequest blogApiRequest){
+
         return BlogApiResponse.builder()
             .page(blogApiRequest.getPage())
             .size(blogApiRequest.getSize())
             .sort(blogApiRequest.getSort())
             .total(kakaoBlogApiResponse.getMeta().getTotal_count())
             .blogs(kakaoBlogApiResponse.getDocuments().stream().map(document -> BlogApiResponse.Blog.builder()
-                .title(document.getTitle())
-                .url(document.getUrl())
-                .contents(document.getContents())
-                .blogName(document.getBlogname())
-                .thumbnail(document.getThumbnail())
-                .postDate(document.getDatetime())
-                .build())
+                    .title(document.getTitle())
+                    .url(document.getUrl())
+                    .contents(document.getContents())
+                    .blogName(document.getBlogname())
+                    .postDate(convertFullDateToYYYYMMDD(document.getDatetime()))
+                    .build())
                 .collect(Collectors.toList()))
             .build();
+    }
+
+    private String convertFullDateToYYYYMMDD(String date){
+        String[] split = date.split("-");
+        return split[0] + split[1] + split[2].substring(0, 2);
     }
 
     private BlogApiResponse getBlogResponse(NaverBlogApiResponse naverBlogApiResponse, BlogApiRequest blogApiRequest){
